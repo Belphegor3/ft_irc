@@ -223,29 +223,27 @@ Le parametre <user> a une longueur max de 9 characters.
 Cette commande est bizarre, dans irssi les arguments ne sont pas les memes en gros on peut juste ignorer les parametres 2 et 3 (et donc le com en dessous) et juste prendre en compte le 1 et 4
 IRSSI se base sur la version d origine du protocole [RFC 1459](https://www.tech-invite.com/y10/tinv-ietf-rfc-1459.html) mais dans les 2 cas osef du 2 et 3
 
-<!-- Le parametre <unused> est litteralement non utilise qu on doit souvent remplir par un tiret -->
-<!-- ou du coup un wilcard  -->
+Le parametre <unused> est litteralement non utilise qu on doit souvent remplir par un tiret
+ou du coup un wilcard 
 
-<!-- Le parametre <mode> est numerique et permet de set un mode automatiquement a l enregistrement -->
-<!-- a un server. -->
-<!-- Si le bit 2 est set on passe en mode w. -->
-<!-- Le mode w (wallops) permet que les messages de type wallops soient envoye a tous les utilisateurs -->
-<!-- avec le mode w actif. -->
-<!-- (il suffit de decaller le nombre de 2 bit et comparer avec 1  -->
-<!-- (ex: 9 >> 2 & 1 = 0 donc le bit 2 n est pas a 1) Le bit 2 etant en verite le 3eme bit -->
-<!-- et vaut donc minimum 4 (100)) -->
-<!-- Si le bit 3 (minimum 8(1000)) est set on passe en mode i. -->
-<!-- Le mode i (invisible) permet qu on ne le voit pas dans la liste des utilisateurs connecte au channel -->
-<!-- ou au reseau sauf pour les autres utilisateurs qui l ont dans leur liste d ami. Mais le sujet ne -->
-<!-- parle pas d amis donc nique. -->
+Le parametre <mode> est numerique et permet de set un mode automatiquement a l enregistrement a un server.
+Si le bit 2 est set on passe en mode w.
+Le mode w (wallops) permet que les messages de type wallops soient envoye a tous les utilisateurs
+avec le mode w actif.
+Il suffit de decaller le nombre de 2 bit et comparer avec 1 
+(ex: 9 >> 2 & 1 = 0 donc le bit 2 n est pas a 1, pour rappel 9 vaut 1*0*01)
+Si le bit 3 est set on passe en mode i.
+Le mode i (invisible) permet qu on ne le voit pas dans la liste des utilisateurs connecte au channel
+ou au reseau sauf pour les autres utilisateurs qui l ont dans leur liste d ami. Mais le sujet ne
+parle pas d amis donc nique.
 
 <realname> peut contenir des espaces
 
 exemple de USER: 
-<!-- USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un realname "Bob"
-						// 8>>2&1=0
-						// 8>>3&1=1
-						// Donc on rajoute MODE+i -->
+        USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un realname "Bob"
+						8>>2&1=0
+						8>>3&1=1
+						Donc on rajoute MODE+i
 USER guest guest guest :very guest  On enregistre un user qui a pour username "guest" avec un realname "very guest"
 					
 Erreurs possibles:	pareil que PASS
