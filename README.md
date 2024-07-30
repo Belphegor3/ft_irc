@@ -191,6 +191,10 @@ irssi attend des reponses precises de ce format:
 
 ## COMMANDES DE BASE POUR USER
 
+- [PASS](#pass)
+- [NICK](#nick)
+- [USER](#user)
+- [QUIT](#quit)
 
 ###	PASS 
 parametres: <password>
@@ -259,6 +263,9 @@ Sert a quitter le client mais pas le server donc pas d erreur possible ca quitte
 
 ##                  MESSAGES
 
+- [PRIVMSG](#privmsg)
+- [NOTICE](#notice)
+
 ###	PRIVMSG
 parametres: <msgtarget> <text to be sent>
 <msgtarget> est la cible qui recevra le <text to be sent> et peut etre un channel ou un <user>.
@@ -283,6 +290,12 @@ S il y avait une erreur on aurait donc un message auto envoye qui necessite auss
 
 ##                  CHANNEL OPERATIONS
 
+- [MODE](#mode)
+- [JOIN](#join)
+- [KICK](#kick)
+- [PART](#part)
+- [INVITE](#invite)
+- [TOPIC](#topic)
 
 ###	MODE
 **Tout d abord attention a ne pas confondre MODE et MODE. Il y a un MODE pour les user et un pour les channels, on n utilise que celui pour les chan**
