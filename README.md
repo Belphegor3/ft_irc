@@ -78,7 +78,7 @@ Le 2811 nous parle de comment gerer les channels qui nous interesse donc a peine
 Le 2812 nous parle du protocol client a server
 Le 2813 nous parle du protocol server a server et ne nous interesse donc pas du tout
 
-On va enormement utiliser le [rfc 2812](https://www.tech-invite.com/y25/tinv-ietf-rfc-2812.html) ou sont specifier les differentes reponses de IRC qui sont de 3 types:
+On va enormement utiliser le [RFC 2812](https://www.tech-invite.com/y25/tinv-ietf-rfc-2812.html) ou sont specifier les differentes reponses de IRC qui sont de 3 types:
 -	RPL_ reponse dans un cas d utilisation correct mais juste a titre informatif (par exemple RPL 001 nous dit bonjour c est tout ca sert a rien mais certains clients ne se lancent pas sans avoir recu bonjour)
 -	ERR_ reponse dans un cas d erreur genre pas assez de parametres (ERR_NEEDMOREPARAMS)
 -	et une reponse qui n a pas de nom mais qui va permettre au server d executer des actions, par exemple quand on JOIN un channel sans la reponse un tel a JOIN tel server, les clients ne vont pas comprendre
@@ -98,9 +98,9 @@ En revanche c est tres important d avoir le # qui permet de distinguer un utilis
 
 Pas besoin de gerer les wildcard ce qui nous evite de gerer les groupes de channel donc pas besoin d en savoir plus.
 
-Le sujet demande de faire la fonction MODE avec les options i, t, k, o et l donc la on peut s interesser au RFC 2811
+Le sujet demande de faire la fonction MODE avec les options i, t, k, o et l donc la on peut s interesser au [RFC 2811](https://www.tech-invite.com/y25/tinv-ietf-rfc-2811.html)
 
-** A NE PAS CONFONDRE MODE ET MODE!! IL EXISTE 2 MODES, UN USER ET UN CHANNEL ET ON NE GERE QUE CELUI CHANNEL DONC MODE +i VEUT DIRE INVITEONLY PAS INVISIBLE **
+**A NE PAS CONFONDRE MODE ET MODE!! IL EXISTE 2 MODES, UN USER ET UN CHANNEL ET ON NE GERE QUE CELUI CHANNEL DONC MODE +i VEUT DIRE INVITEONLY PAS INVISIBLE**
 
 
 ##                     USER 
@@ -114,14 +114,14 @@ parce qu il est normalement automatiquement enregistre quand on rejoint le serve
 
 
 difference entre nickname et username:
-** Nickname (pseudo) : **
+**Nickname (pseudo) :**
 
  Le nickname est un identifiant unique utilisé par un utilisateur sur le serveur IRC.
  Il peut être choisi librement par l utilisateur, mais il doit être unique parmi tous les utilisateurs connectés au serveur.
  Le nickname est utilisé pour identifier un utilisateur lorsqu il rejoint des canaux, envoie des messages privés, etc.
  Le nickname peut être visible aux autres utilisateurs sur le serveur.
 
-** Username (nom d utilisateur) : **
+**Username (nom d utilisateur) :**
 
  Le username est une autre forme d identification utilisée sur le serveur IRC.
  Il est souvent associé à un compte utilisateur enregistré sur le serveur IRC.
@@ -150,13 +150,13 @@ il doit recevoir "PRIVMSG user :salut ca va\r\n"
 Pour se faire, avec ncat, on ne doit pas lancer "nc localhost port" mais "nc -C localhost port" parce que le -C ajoute "\r\n" a la fin de chaque message automatiquement.
 
 //? Dans l exemple au dessus `PRIVMSG user :salut ca va\r\n` on peut remarquer le ":". Il correspond au dernier argument et signifie que ce dernier argument peut contenir des espaces (a gerer comme on veut hein).
-** par argument j entend que ca fait partie des parametres de la commande **
+**par argument j entend que ca fait partie des parametres de la commande**
 
-** Attention, une commande IRC a cette forme: PREFIX COMMANDE PARAMS **
+**Attention, une commande IRC a cette forme: PREFIX COMMANDE PARAMS**
 Le prefix commence aussi par ":" mais est inutile dans le contexte du projet IRC puisqu on est pas en relation avec d autres servers donc on peut l ignorer mais attention a ne pas crash
 Commande est donc un nom de commande et params les parametres associe a la commande.
 
-** Si on part sur le client irssi comme client de base, on doit taper par exemple "/msg user yo ca va?" pour ecrire un mp a un utilisateur qui s appelle user, ca c est ce que l utilisateur tape mais le server recoit "PRIVMSG user :yo ca va?\r\n" **
+**Si on part sur le client irssi comme client de base, on doit taper par exemple "/msg user yo ca va?" pour ecrire un mp a un utilisateur qui s appelle user, ca c est ce que l utilisateur tape mais le server recoit "PRIVMSG user :yo ca va?\r\n"**
 
 
 ##                     IRSSI
@@ -186,7 +186,7 @@ irssi attend des reponses precises de ce format:
 
  Je parle ici d un strict minimum des commandes a implementer on peut en rajouter pleins si on veut
  Je ne liste que des RPL et des ERR pas les reponses que j appelle informative et qui sont necessaire au bon fonctionnement de irssi
- Il n y a pas toutes les RPL/ERR du RFC2812 parce que certaines ERR/RPL sont inutiles dans le cadre de notre projet
+ Il n y a pas toutes les RPL/ERR du [RFC 2812](https://www.tech-invite.com/y25/tinv-ietf-rfc-2812.html) parce que certaines ERR/RPL sont inutiles dans le cadre de notre projet
 
 
 ## COMMANDES DE BASE POUR USER
@@ -221,7 +221,7 @@ parametres: <user><mode><unused><realname>
 Le parametre <user> a une longueur max de 9 characters.
 
 Cette commande est bizarre, dans irssi les arguments ne sont pas les memes en gros on peut juste ignorer les parametres 2 et 3 (et donc le com en dessous) et juste prendre en compte le 1 et 4
-IRSSI se base sur la version d origine du protocole 1459 mais dans les 2 cas osef du 2 et 3
+IRSSI se base sur la version d origine du protocole [RFC 1459](https://www.tech-invite.com/y10/tinv-ietf-rfc-1459.html) mais dans les 2 cas osef du 2 et 3
 
 <!-- Le parametre <unused> est litteralement non utilise qu on doit souvent remplir par un tiret -->
 <!-- ou du coup un wilcard  -->
