@@ -1,13 +1,11 @@
 # NOTES EN VRAC SUR IRC
 
-Il faut installer l extension better comments pour profiter pleinement de ce tuto sur vscode
-
 IRC Internet Relay Chat est un protocol simpliste basé sur du texte qui met en relation un client et un server
 
 Le projet nous apprend a mettre en oeuvre une architecture en c++ structuré et l utilisation d un gestionnaire de fd
 
 GESTIONNAIRE DE FD:
-Ca sert a gerer simultanement plusieurs fd pour des actions de lecture et d ecriture donc si on veut acceder ou ajouter des donnees a un fd
+Ca sert a gerer simultanement plusieurs fd pour des actions de lecture et d ecriture
 
 ## Table des matieres
 
@@ -28,11 +26,11 @@ Ca sert a gerer simultanement plusieurs fd pour des actions de lecture et d ecri
 Select est le gestionnaire de fd qui va nous interesser.
 int select(int nfds, fd_set *_Nullable restrict readfds, fd_set *_Nullable restrict writefds, fd_set *_Nullable restrict exceptfds, struct timeval *_Nullable restrict timeout);
 
-//TODO       nfds correspond au fd du server qui lui meme sera tjs 4 puisque la fonction socket utilise le premier fd disponible qui est le 3 et qu il faut tjs ajouter 1
-//TODO       readfds correspond au groupe des fd sur lesquels on peut executer des actions d ecriture donc lire de donnees sans les changer
-//TODO       writefds correspond au groupe des fd sur lesquels on peut executer des actions de lecture donc ajouter des donnees 
-//TODO       exceptfds porte bien son nom et balec donc NULL
-//TODO       timeout osef aussi c pour mettre des limites de temps donc NULL
+       nfds correspond au fd du server qui lui meme sera tjs 4 puisque la fonction socket utilise le premier fd disponible qui est le 3 et qu il faut tjs ajouter 1
+       readfds correspond au groupe des fd sur lesquels on peut executer des actions d ecriture donc lire de donnees sans les changer
+       writefds correspond au groupe des fd sur lesquels on peut executer des actions de lecture donc ajouter des donnees 
+       exceptfds porte bien son nom et balec donc NULL
+       timeout osef aussi c pour mettre des limites de temps donc NULL
 
 On a donc 2 listes de fd actif qu il faut gerer et il ne faut en oublier aucun des deux sinon problemes.
 Pour gerer ces listes de fd, il y a 4 fonctions importantes:
@@ -54,12 +52,12 @@ Donc par exemple quand on supprime un client, on doit donc enlever son fd de la 
 La fonction socket fonctionne comme un open pour un fd random sauf que socket prend le premier fd dispo
 int socket(int domain, int type, int protocol);
 
-//TODO		domain correspond a une specification de domaine de communication de <sys/socket.h> mais ce qui nous interesse c est le sujet donc IPv4 
-//TODO		ou IPv6 donc seulement AF_INET et AF_INET6 donc balec en gros
-//TODO		type correspond a des types different qui commencent par SOCK_ et on peut surtout porter attention a SOCK_NONBLOCK a cause du sujet qui creer une liste
-//TODO		d attente des actions a realiser sur les differents fd actifs
-//TODO		protocol correspond bah a des protocoles xD par exemple IPPROTO_TCP est un protocole de controle de transmission (TCP) qui cree une socket orientee connexion 
-//TODO		(dans le cadre IPv4 tout du moins) qui offre un flux de donnees fiables et bidirectionnel entre les parties. Mais sinon on met 0 et ca choisit le mieux adapte normalement
+		domain correspond a une specification de domaine de communication de <sys/socket.h> mais ce qui nous interesse c est le sujet donc IPv4 
+		ou IPv6 donc seulement AF_INET et AF_INET6 donc balec en gros
+		type correspond a des types different qui commencent par SOCK_ et on peut surtout porter attention a SOCK_NONBLOCK a cause du sujet qui creer une liste
+		d attente des actions a realiser sur les differents fd actifs
+		protocol correspond bah a des protocoles xD par exemple IPPROTO_TCP est un protocole de controle de transmission (TCP) qui cree une socket orientee connexion 
+		(dans le cadre IPv4 tout du moins) qui offre un flux de donnees fiables et bidirectionnel entre les parties. Mais sinon on met 0 et ca choisit le mieux adapte normalement
 
 Avec la fonction socket on va utiliser plusieurs fonctions:
 - setsockopt qui permet de changer les parametres de cette socket
@@ -102,7 +100,7 @@ Pas besoin de gerer les wildcard ce qui nous evite de gerer les groupes de chann
 
 Le sujet demande de faire la fonction MODE avec les options i, t, k, o et l donc la on peut s interesser au RFC 2811
 
-//! A NE PAS CONFONDRE MODE ET MODE!! IL EXISTE 2 MODES, UN USER ET UN CHANNEL ET ON NE GERE QUE CELUI CHANNEL DONC MODE +i VEUT DIRE INVITEONLY PAS INVISIBLE
+** A NE PAS CONFONDRE MODE ET MODE!! IL EXISTE 2 MODES, UN USER ET UN CHANNEL ET ON NE GERE QUE CELUI CHANNEL DONC MODE +i VEUT DIRE INVITEONLY PAS INVISIBLE **
 
 
 ##                     USER 
@@ -116,14 +114,14 @@ parce qu il est normalement automatiquement enregistre quand on rejoint le serve
 
 
 difference entre nickname et username:
-//! Nickname (pseudo) :
+** Nickname (pseudo) : **
 
  Le nickname est un identifiant unique utilisé par un utilisateur sur le serveur IRC.
  Il peut être choisi librement par l utilisateur, mais il doit être unique parmi tous les utilisateurs connectés au serveur.
  Le nickname est utilisé pour identifier un utilisateur lorsqu il rejoint des canaux, envoie des messages privés, etc.
  Le nickname peut être visible aux autres utilisateurs sur le serveur.
 
-//! Username (nom d utilisateur) :
+** Username (nom d utilisateur) : **
 
  Le username est une autre forme d identification utilisée sur le serveur IRC.
  Il est souvent associé à un compte utilisateur enregistré sur le serveur IRC.
@@ -141,7 +139,7 @@ Techniquement un operateur server a des privileges qui dependent du server, il p
 Mais en gros un operateur server peut utiliser les commandes KILL, SQUIT, REHASH, DIE, RESTART, CONNECT et aucune de ces fonctions etant utiles...
 
 On va s interesser uniquement aux operateurs channels qui est un privilege qui s acquiert de 2 facons. Soit en creant un channel on devient par defaut operateur channel.
-Soit en realisant un "MODE +o nom_du_nouvel_operateur" qui est une commande necessitant le privilege operateur channel UwU
+Soit en realisant un `MODE +o nom_du_nouvel_operateur` qui est une commande necessitant le privilege operateur channel UwU
 
 
 ##                FONCTIONNEMENT                
@@ -151,14 +149,14 @@ Un message ne se terminant pas par CRLF (\r\n) n est pas interpreter donc un cli
 il doit recevoir "PRIVMSG user :salut ca va\r\n"
 Pour se faire, avec ncat, on ne doit pas lancer "nc localhost port" mais "nc -C localhost port" parce que le -C ajoute "\r\n" a la fin de chaque message automatiquement.
 
-//? Dans l exemple au dessus "PRIVMSG user :salut ca va\r\n" on peut remarquer le ":". Il correspond forcement au dernier argument et signifie que ce dernier argument peut contenir des espaces (a gerer comme on veut hein).
+//? Dans l exemple au dessus `PRIVMSG user :salut ca va\r\n` on peut remarquer le ":". Il correspond au dernier argument et signifie que ce dernier argument peut contenir des espaces (a gerer comme on veut hein).
+** par argument j entend que ca fait partie des parametres de la commande **
 
-//! Attention, une commande IRC a cette forme: PREFIX COMMANDE PARAMS
+** Attention, une commande IRC a cette forme: PREFIX COMMANDE PARAMS **
 Le prefix commence aussi par ":" mais est inutile dans le contexte du projet IRC puisqu on est pas en relation avec d autres servers donc on peut l ignorer mais attention a ne pas crash
 Commande est donc un nom de commande et params les parametres associe a la commande.
 
-//! Si on part sur le client irssi comme client de base, on doit taper par exemple "/msg user yo ca va?" pour ecrire un mp a un utilisateur qui s appelle user, ca c est ce que l utilisateur tape
-//!	mais le server recoit "PRIVMSG user :yo ca va?\r\n"
+** Si on part sur le client irssi comme client de base, on doit taper par exemple "/msg user yo ca va?" pour ecrire un mp a un utilisateur qui s appelle user, ca c est ce que l utilisateur tape mais le server recoit "PRIVMSG user :yo ca va?\r\n" **
 
 
 ##                     IRSSI
@@ -186,9 +184,9 @@ irssi attend des reponses precises de ce format:
 
 #                   COMMANDES                  
 
-//TODO Je parle ici d un strict minimum des commandes a implementer on peut en rajouter pleins si on veut
-//TODO Je ne liste que des RPL et des ERR pas les reponses que j appelle informative et qui sont necessaire au bon fonctionnement de irssi
-//TODO Il n y a pas toutes les RPL/ERR du RFC2812 parce que certaines ERR/RPL sont inutiles dans le cadre de notre projet
+ Je parle ici d un strict minimum des commandes a implementer on peut en rajouter pleins si on veut
+ Je ne liste que des RPL et des ERR pas les reponses que j appelle informative et qui sont necessaire au bon fonctionnement de irssi
+ Il n y a pas toutes les RPL/ERR du RFC2812 parce que certaines ERR/RPL sont inutiles dans le cadre de notre projet
 
 
 ## COMMANDES DE BASE POUR USER
@@ -199,9 +197,9 @@ parametres: <password>
 C est un mot de passe de connection set dans le main et s il est faux on ne peut pas se connecter sur un client
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"
-ERR_PASSWDMISMATCH		464		":Password incorrect"
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"`
+`ERR_PASSWDMISMATCH		464		":Password incorrect"`
 
 
 
@@ -210,11 +208,11 @@ parametres: <nickname>
 Permet de donner ou changer le nom du user avec un max de 9 characters.
 
 Erreurs possibles:
-ERR_NONICKNAMEGIVEN		431		":No nickname given"    	//	remplace donc le ERR_NEEDMOREPARAMS ici   
-ERR_ERRONEUSNICKNAME	432		"<nick> :Erroneous nickname"	//	intervient si on ne respecte pas la convention d ecriture d un nom (je l ai gere comme le RFC mais comme on veut)
-ERR_NICKNAMEINUSE		433		"<nick> :Nickname is already in use"
+`ERR_NONICKNAMEGIVEN		431		":No nickname given"    	//	remplace donc le ERR_NEEDMOREPARAMS ici   `
+`ERR_ERRONEUSNICKNAME	432		"<nick> :Erroneous nickname"	//	intervient si on ne respecte pas la convention d ecriture d un nom (je l ai gere comme le RFC mais comme on veut)`
+`ERR_NICKNAMEINUSE		433		"<nick> :Nickname is already in use"`
 
-//	par convention d ecriture il faudrait au moins interdire d avoir un nick qui commence par # pour differencier un user d un channel
+**	par convention d ecriture il faudrait au moins interdire d avoir un nick qui commence par # pour differencier un user d un channel **
 
 
 
@@ -249,13 +247,13 @@ USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un r
 						// Donc on rajoute MODE+i
 					
 Erreurs possibles:	pareil que PASS
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"`
 
 
 ###	QUIT
 parametres: [ <message envoye a sois meme quand on quitte, les autres ne le voient pas> ]
-//TODO les parametres entre crochet [] sont des parametres optionnels
+ les parametres entre crochet [] sont des parametres optionnels
 
 Sert a quitter le client mais pas le server donc pas d erreur possible ca quitte.
 
@@ -268,9 +266,9 @@ parametres: <msgtarget> <text to be sent>
 Les messages IRC sont limites a 510 chars avec "\r\n" a la fin
 
 Erreurs possibles:
-ERR_NORECIPIENT			411		":No recipient given (<command>)"          
-ERR_NOTEXTTOSEND		412		":No text to send"
-ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"
+`ERR_NORECIPIENT			411		":No recipient given (<command>)"          `
+`ERR_NOTEXTTOSEND		412		":No text to send"`
+`ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"`
            
 // la difference entre NORECIPIENT et NOTEXTTOSEND est s il manque juste le text (NOTEXTTOSEND) et s il manque les 2 arguments donc une cible et le text (NORECIPIENT)
 // il existe une erreur CANNOTSENDTOCHAN mais elle n intervient que si les modes n,v,m ou b sont actifs donc si on ne gere pas ces modes pas besoin de faire cette erreur
@@ -297,8 +295,8 @@ Utiliser la commande MODE necessite le privilege channel operator.
 Si on met juste un nom de channel, on doit envoyer un RPL_CHANNELMODEIS pour le chan en question
 
 On doit donc renseigner un channel sur lequel executer les instructions puis si on veut ajouter ou enlever un mode
-+ pour ajouter
-- pour enlever
+"+" pour ajouter
+"-" pour enlever
 
 Le mode +k sert a sert un mot de passe au channel, mode +k a donc un parametre (ex: MODE #test +k 1234)
 Le mode -k sert donc a enlever ce mot de passe 
@@ -316,22 +314,22 @@ On peut mixer les modes et faire un "MODE #test +itk 1234" mais ca peut etre chi
 Il faut prevenir tous les users qu un mode change
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS pour le +k, +l et +o
-ERR_KEYSET				467		"<channel> :Channel key already set"
-ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
-ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"
-ERR_UNKNOWNMODE			472		"<char> :is unknown mode char to me for <channel>"
-ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
+`ERR_NEEDMOREPARAMS pour le +k, +l et +o`
+`ERR_KEYSET				467		"<channel> :Channel key already set"`
+`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
+`ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"`
+`ERR_UNKNOWNMODE			472		"<char> :is unknown mode char to me for <channel>"`
+`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
 
 RPL:
-RPL_UNIQOPIS			325		"<channel> <nickname>"
-RPL_CHANNELMODEIS		324		"<channel> <mode> <mode params>"	// liste les modes actifs sur le channel
+`RPL_UNIQOPIS			325		"<channel> <nickname>"`
+`RPL_CHANNELMODEIS		324		"<channel> <mode> <mode params>"	// liste les modes actifs sur le channel`
 
 
 ###	JOIN
 parametres: ( <channel> *( "," <channel> ) [ <key> *( "," <key> ) ] ) / "0"
-//TODO les parametres entre crochet [] sont des parametres optionnels
-//TODO les parametres quand il y a un "/" signifie qu il a plusieurs types d arguments differents possibles, donc soit a droite du / soit a gauche
+ les parametres entre crochet [] sont des parametres optionnels
+ les parametres quand il y a un "/" signifie qu il a plusieurs types d arguments differents possibles, donc soit a droite du / soit a gauche
 
 La commande join est utilisee pour creer un nouveau chan s il n a pas encore ete cree sinon juste le rejoindre.
 Si on le cree on devient chanop (channel operator) de ce channel.
@@ -347,22 +345,22 @@ Pour rejoindre un channel il faut donc faire tout ca et a la fin emettre une rep
 Ensuite faire les RPL_NAMEREPLY (donc une liste des utilisateurs present dans le channel) puis un RPL_ENDOFNAMES (donc fin du RPL_NAMEREPLY)
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS              
-ERR_INVITEONLYCHAN      473 	"<channel> :Cannot join channel (+i)" 	//	voir MODE
-ERR_BADCHANNELKEY		475		"<channel> :Cannot join channel (+k)"	//	voir MODE
-ERR_CHANNELISFULL       471    	"<channel> :Cannot join channel (+l)"   //	voir MODE
-ERR_NOSUCHCHANNEL               
-ERR_TOOMANYCHANNELS		405		"<channel name> :You have joined too many channels" // pas utile sauf si on veut mettre une limite de channel que chaque user peut rejoindre
+`ERR_NEEDMOREPARAMS              `
+`ERR_INVITEONLYCHAN      473 	"<channel> :Cannot join channel (+i)" 	//	voir MODE`
+`ERR_BADCHANNELKEY		475		"<channel> :Cannot join channel (+k)"	//	voir MODE`
+`ERR_CHANNELISFULL       471    	"<channel> :Cannot join channel (+l)"   //	voir MODE`
+`ERR_NOSUCHCHANNEL               `
+`ERR_TOOMANYCHANNELS		405		"<channel name> :You have joined too many channels" // pas utile sauf si on veut mettre une limite de channel que chaque user peut rejoindre`
 
 RPL:
-RPL_NAMEREPLY			353		"=<channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )"	// @ pour les chanop et + pour les user normaux
-RPL_ENDOFNAMES			366		"<channel> :End of NAMES list"
+`RPL_NAMEREPLY			353		"=<channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )"	// @ pour les chanop et + pour les user normaux`
+`RPL_ENDOFNAMES			366		"<channel> :End of NAMES list"`
 
 
 
 ###	KICK
 parametres: <channel> *( "," <channel> ) <user> *( "," <user> ) [<comment>]
-//TODO les parametres entre crochet [] sont des parametres optionnels
+ les parametres entre crochet [] sont des parametres optionnels
 
 On peut donc mettre autant de chan et de user a KICK qu on veut avec une potentielle raison <comment> genre "il parle francais". 
 //! On peut mettre plusieurs chan et un user ou un chan et plusieurs user pas plusieurs des 2 en meme temps
@@ -370,11 +368,11 @@ La commande KICK utilise la commande PART (juste en dessous).
 Necessite une reponse non RPL/ERR (voir plus haut)
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
-ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
-ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"         
-ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
+`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
+`ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"         `
+`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
 
 
 ###	PART
@@ -384,9 +382,9 @@ Si <Part Message> est renseigne alors on remplace le message par defaut (qui est
 Il faut envoyer une reponse non RPL/ERR a tous les autre users du/des channel que l utilisateur quitte avec PART
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
-ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
+`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
 
 
 ###	INVITE
@@ -399,14 +397,14 @@ L utilisateur invite recoit une notification alors que l utilisateur qui invite 
 Cette notification est une reponse non ERR/RPL (voir plus haut)
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"
-ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
-ERR_USERONCHANNEL		443		"<user> <channel> :is already on channel"
-ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"`
+`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
+`ERR_USERONCHANNEL		443		"<user> <channel> :is already on channel"`
+`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
 
 Reponses commande:
-RPL_INVITING			341		"<channel> <nick>"             
+`RPL_INVITING			341		"<channel> <nick>"      `       
 
 
 ###	TOPIC
@@ -419,14 +417,14 @@ Donc si on fait un "TOPIC #test" il faut renvoye un RPL_TOPIC si on topic existe
 Si on change le topic il faut prevenir tous les users du channel avec une reponse non ERR/RPL (voir plus bcp plus haut)
 
 Erreurs possibles:
-ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
-ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
-ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
-ERR_NOCHANMODES			477		"<channel> :Channel doesn't support modes"		je comprend pas cette erreur
+`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
+`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
+`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
+`ERR_NOCHANMODES			477		"<channel> :Channel doesn't support modes"		je comprend pas cette erreur`
 
 Reponses commande:
-RPL_NOTOPIC             331		"<channel> :No topic is set"        
-RPL_TOPIC				332		"<channel> :<topic>"
+`RPL_NOTOPIC             331		"<channel> :No topic is set" `       
+`RPL_TOPIC				332		"<channel> :<topic>"`
 
 
 ## TIPS
