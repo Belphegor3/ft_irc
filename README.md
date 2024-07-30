@@ -197,9 +197,9 @@ parametres: <password>
 C est un mot de passe de connection set dans le main et s il est faux on ne peut pas se connecter sur un client
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"`
-`ERR_PASSWDMISMATCH		464		":Password incorrect"`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"
+ERR_PASSWDMISMATCH		464		":Password incorrect"
 
 
 
@@ -208,9 +208,9 @@ parametres: <nickname>
 Permet de donner ou changer le nom du user avec un max de 9 characters.
 
 Erreurs possibles:
-`ERR_NONICKNAMEGIVEN		431		":No nickname given"    	//	remplace donc le ERR_NEEDMOREPARAMS ici   `
-`ERR_ERRONEUSNICKNAME	432		"<nick> :Erroneous nickname"	//	intervient si on ne respecte pas la convention d ecriture d un nom (je l ai gere comme le RFC mais comme on veut)`
-`ERR_NICKNAMEINUSE		433		"<nick> :Nickname is already in use"`
+ERR_NONICKNAMEGIVEN		431		":No nickname given"    	//	remplace donc le ERR_NEEDMOREPARAMS ici   
+ERR_ERRONEUSNICKNAME	432		"<nick> :Erroneous nickname"	//	intervient si on ne respecte pas la convention d ecriture d un nom (je l ai gere comme le RFC mais comme on veut)
+ERR_NICKNAMEINUSE		433		"<nick> :Nickname is already in use"
 
 **	par convention d ecriture il faudrait au moins interdire d avoir un nick qui commence par # pour differencier un user d un channel **
 
@@ -247,8 +247,8 @@ USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un r
 						// Donc on rajoute MODE+i
 					
 Erreurs possibles:	pareil que PASS
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_ALREADYREGISTRED	462		":Unauthorized command (already registered)"
 
 
 ###	QUIT
@@ -266,9 +266,9 @@ parametres: <msgtarget> <text to be sent>
 Les messages IRC sont limites a 510 chars avec "\r\n" a la fin
 
 Erreurs possibles:
-`ERR_NORECIPIENT			411		":No recipient given (<command>)"          `
-`ERR_NOTEXTTOSEND		412		":No text to send"`
-`ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"`
+ERR_NORECIPIENT			411		":No recipient given (<command>)"          
+ERR_NOTEXTTOSEND		412		":No text to send"
+ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"
            
 // la difference entre NORECIPIENT et NOTEXTTOSEND est s il manque juste le text (NOTEXTTOSEND) et s il manque les 2 arguments donc une cible et le text (NORECIPIENT)
 // il existe une erreur CANNOTSENDTOCHAN mais elle n intervient que si les modes n,v,m ou b sont actifs donc si on ne gere pas ces modes pas besoin de faire cette erreur
@@ -295,8 +295,8 @@ Utiliser la commande MODE necessite le privilege channel operator.
 Si on met juste un nom de channel, on doit envoyer un RPL_CHANNELMODEIS pour le chan en question
 
 On doit donc renseigner un channel sur lequel executer les instructions puis si on veut ajouter ou enlever un mode
-"+" pour ajouter
-"-" pour enlever
++ pour ajouter
+- pour enlever
 
 Le mode +k sert a sert un mot de passe au channel, mode +k a donc un parametre (ex: MODE #test +k 1234)
 Le mode -k sert donc a enlever ce mot de passe 
@@ -314,16 +314,16 @@ On peut mixer les modes et faire un "MODE #test +itk 1234" mais ca peut etre chi
 Il faut prevenir tous les users qu un mode change
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS pour le +k, +l et +o`
-`ERR_KEYSET				467		"<channel> :Channel key already set"`
-`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
-`ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"`
-`ERR_UNKNOWNMODE			472		"<char> :is unknown mode char to me for <channel>"`
-`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
+ERR_NEEDMOREPARAMS pour le +k, +l et +o
+ERR_KEYSET				467		"<channel> :Channel key already set"
+ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
+ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"
+ERR_UNKNOWNMODE			472		"<char> :is unknown mode char to me for <channel>"
+ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
 
 RPL:
-`RPL_UNIQOPIS			325		"<channel> <nickname>"`
-`RPL_CHANNELMODEIS		324		"<channel> <mode> <mode params>"	// liste les modes actifs sur le channel`
+RPL_UNIQOPIS			325		"<channel> <nickname>"
+RPL_CHANNELMODEIS		324		"<channel> <mode> <mode params>"	// liste les modes actifs sur le channel
 
 
 ###	JOIN
@@ -345,16 +345,16 @@ Pour rejoindre un channel il faut donc faire tout ca et a la fin emettre une rep
 Ensuite faire les RPL_NAMEREPLY (donc une liste des utilisateurs present dans le channel) puis un RPL_ENDOFNAMES (donc fin du RPL_NAMEREPLY)
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS              `
-`ERR_INVITEONLYCHAN      473 	"<channel> :Cannot join channel (+i)" 	//	voir MODE`
-`ERR_BADCHANNELKEY		475		"<channel> :Cannot join channel (+k)"	//	voir MODE`
-`ERR_CHANNELISFULL       471    	"<channel> :Cannot join channel (+l)"   //	voir MODE`
-`ERR_NOSUCHCHANNEL               `
-`ERR_TOOMANYCHANNELS		405		"<channel name> :You have joined too many channels" // pas utile sauf si on veut mettre une limite de channel que chaque user peut rejoindre`
+ERR_NEEDMOREPARAMS              
+ERR_INVITEONLYCHAN      473 	"<channel> :Cannot join channel (+i)" 	//	voir MODE
+ERR_BADCHANNELKEY		475		"<channel> :Cannot join channel (+k)"	//	voir MODE
+ERR_CHANNELISFULL       471    	"<channel> :Cannot join channel (+l)"   //	voir MODE
+ERR_NOSUCHCHANNEL               
+ERR_TOOMANYCHANNELS		405		"<channel name> :You have joined too many channels" // pas utile sauf si on veut mettre une limite de channel que chaque user peut rejoindre
 
 RPL:
-`RPL_NAMEREPLY			353		"=<channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )"	// @ pour les chanop et + pour les user normaux`
-`RPL_ENDOFNAMES			366		"<channel> :End of NAMES list"`
+RPL_NAMEREPLY			353		"=<channel> :[ "@" / "+" ] <nick> *( " " [ "@" / "+" ] <nick> )"	// @ pour les chanop et + pour les user normaux
+RPL_ENDOFNAMES			366		"<channel> :End of NAMES list"
 
 
 
@@ -368,11 +368,11 @@ La commande KICK utilise la commande PART (juste en dessous).
 Necessite une reponse non RPL/ERR (voir plus haut)
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
-`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
-`ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"         `
-`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
+ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
+ERR_USERNOTINCHANNEL	441		"<nick> <channel> :They aren't on that channel"         
+ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
 
 
 ###	PART
@@ -382,9 +382,9 @@ Si <Part Message> est renseigne alors on remplace le message par defaut (qui est
 Il faut envoyer une reponse non RPL/ERR a tous les autre users du/des channel que l utilisateur quitte avec PART
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"`
-`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_NOSUCHCHANNEL		403		"<channel name> :No such channel"
+ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
 
 
 ###	INVITE
@@ -397,14 +397,14 @@ L utilisateur invite recoit une notification alors que l utilisateur qui invite 
 Cette notification est une reponse non ERR/RPL (voir plus haut)
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"`
-`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
-`ERR_USERONCHANNEL		443		"<user> <channel> :is already on channel"`
-`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_NOSUCHNICK			401		"<nickname> :No such nick/channel"
+ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
+ERR_USERONCHANNEL		443		"<user> <channel> :is already on channel"
+ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
 
 Reponses commande:
-`RPL_INVITING			341		"<channel> <nick>"      `       
+RPL_INVITING			341		"<channel> <nick>"             
 
 
 ###	TOPIC
@@ -417,14 +417,14 @@ Donc si on fait un "TOPIC #test" il faut renvoye un RPL_TOPIC si on topic existe
 Si on change le topic il faut prevenir tous les users du channel avec une reponse non ERR/RPL (voir plus bcp plus haut)
 
 Erreurs possibles:
-`ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"`
-`ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"`
-`ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"`
-`ERR_NOCHANMODES			477		"<channel> :Channel doesn't support modes"		je comprend pas cette erreur`
+ERR_NEEDMOREPARAMS		461		"<command> :Not enough parameters"
+ERR_NOTONCHANNEL		442		"<channel> :You're not on that channel"
+ERR_CHANOPRIVSNEEDED	482		"<channel> :You're not channel operator"
+ERR_NOCHANMODES			477		"<channel> :Channel doesn't support modes"		je comprend pas cette erreur
 
 Reponses commande:
-`RPL_NOTOPIC             331		"<channel> :No topic is set" `       
-`RPL_TOPIC				332		"<channel> :<topic>"`
+RPL_NOTOPIC             331		"<channel> :No topic is set"        
+RPL_TOPIC				332		"<channel> :<topic>"
 
 
 ## TIPS
