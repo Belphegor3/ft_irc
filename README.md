@@ -238,7 +238,8 @@ parle pas d amis donc nique.
 <realname> peut contenir des espaces
 
 exemple de USER:  
-        USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un realname "Bob"  
+        USER guest 8 * :Bob  
+                        On enregistre un user qui a pour username "guest" avec un realname "Bob"  
 						8>>2&1=0  
 						8>>3&1=1  
 						Donc on rajoute MODE+i  
