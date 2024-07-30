@@ -227,23 +227,21 @@ Le parametre <unused> est litteralement non utilise qu on doit souvent remplir p
 ou du coup un wilcard 
 
 Le parametre <mode> est numerique et permet de set un mode automatiquement a l enregistrement a un server.
-Si le bit 2 est set on passe en mode w.
-Le mode w (wallops) permet que les messages de type wallops soient envoye a tous les utilisateurs
-avec le mode w actif.
-Il suffit de decaller le nombre de 2 bit et comparer avec 1 
+Si le bit 2 est set on passe en mode w.  
+Le mode w (wallops) permet que les messages de type wallops soient envoye a tous les utilisateurs avec le mode w actif.  
+Il suffit de decaller le nombre de 2 bit et comparer avec 1.  
 (ex: 9 >> 2 & 1 = 0 donc le bit 2 n est pas a 1, pour rappel 9 vaut 1*0*01)
-Si le bit 3 est set on passe en mode i.
-Le mode i (invisible) permet qu on ne le voit pas dans la liste des utilisateurs connecte au channel
-ou au reseau sauf pour les autres utilisateurs qui l ont dans leur liste d ami. Mais le sujet ne
-parle pas d amis donc nique.
-
+Si le bit 3 est set on passe en mode i.  
+Le mode i (invisible) permet qu on ne le voit pas dans la liste des utilisateurs connecte au channel ou au reseau sauf pour les autres utilisateurs qui l ont dans leur liste d ami. Mais le sujet ne
+parle pas d amis donc nique.  
+  
 <realname> peut contenir des espaces
 
-exemple de USER: 
-        USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un realname "Bob"
-						8>>2&1=0
-						8>>3&1=1
-						Donc on rajoute MODE+i
+exemple de USER:  
+        USER guest 8 * :Bob		On enregistre un user qui a pour username "guest" avec un realname "Bob"  
+						8>>2&1=0  
+						8>>3&1=1  
+						Donc on rajoute MODE+i  
 USER guest guest guest :very guest  On enregistre un user qui a pour username "guest" avec un realname "very guest"
 					
 Erreurs possibles:	pareil que PASS
