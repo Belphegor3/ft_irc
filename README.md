@@ -189,6 +189,7 @@ irssi attend des reponses precises de ce format:
 
 ## COMMANDES DE BASE POUR USER
 
+- [Summary](#table-des-matieres)
 - [PASS](#pass)
 - [NICK](#nick)
 - [USER](#user)
@@ -260,6 +261,7 @@ Sert a quitter le client mais pas le server donc pas d erreur possible ca quitte
 
 ##                  MESSAGES
 
+- [Summary](#table-des-matieres)
 - [PRIVMSG](#privmsg)
 - [NOTICE](#notice)
 
@@ -287,6 +289,7 @@ S il y avait une erreur on aurait donc un message auto envoye qui necessite auss
 
 ##                  CHANNEL OPERATIONS
 
+- [Summary](#table-des-matieres)
 - [MODE](#mode)
 - [JOIN](#join)
 - [KICK](#kick)
